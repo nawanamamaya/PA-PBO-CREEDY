@@ -289,7 +289,18 @@ while (rs.next()) {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+    int pilihan = javax.swing.JOptionPane.showConfirmDialog(
+        this, 
+        "Apakah Anda yakin ingin keluar dari sistem?", 
+        "Konfirmasi Logout", 
+        javax.swing.JOptionPane.YES_NO_OPTION
+    );
+    
+    if (pilihan == javax.swing.JOptionPane.YES_OPTION) {
+        model.UserSession.clearSession();
+        new LoginView().setVisible(true);
+        this.dispose();
+    }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed

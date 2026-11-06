@@ -27,6 +27,11 @@ public class RegisterView extends javax.swing.JFrame {
     public RegisterView() {
         initComponents();
         
+            this.setExtendedState(javax.swing.JFrame.NORMAL);
+
+    // 3. Posisikan window tepat di tengah layar secara otomatis
+    this.setLocationRelativeTo(null);
+        
     }
 
     /**
@@ -160,6 +165,7 @@ public class RegisterView extends javax.swing.JFrame {
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Background.png"))); // NOI18N
         bg.setText("dsf");
+        bg.setPreferredSize(new java.awt.Dimension(1294, 647));
         getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();

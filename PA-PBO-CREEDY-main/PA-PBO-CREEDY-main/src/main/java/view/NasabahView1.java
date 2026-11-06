@@ -22,6 +22,11 @@ public class NasabahView1 extends javax.swing.JFrame {
      */
     public NasabahView1() {
         initComponents();
+        
+    this.setExtendedState(javax.swing.JFrame.NORMAL);
+    this.setLocationRelativeTo(null);
+    jTable1.getTableHeader().setReorderingAllowed(false);
+    jTable1.getTableHeader().setResizingAllowed(false);
         if (!config.nasabah(this)) return;
         jButton5.addActionListener(e -> config.open(this,LiatProfilView_1::new));
         jTextField2.setEditable(false);jTextField3.setEditable(false);jTextField7.setEditable(false);
@@ -256,7 +261,18 @@ public class NasabahView1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        config.logout(this);
+    int pilihan = javax.swing.JOptionPane.showConfirmDialog(
+        this, 
+        "Apakah Anda yakin ingin keluar dari sistem?", 
+        "Konfirmasi Logout", 
+        javax.swing.JOptionPane.YES_NO_OPTION
+    );
+    
+    if (pilihan == javax.swing.JOptionPane.YES_OPTION) {
+        model.UserSession.clearSession();
+        new LoginView().setVisible(true);
+        this.dispose();
+    }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed

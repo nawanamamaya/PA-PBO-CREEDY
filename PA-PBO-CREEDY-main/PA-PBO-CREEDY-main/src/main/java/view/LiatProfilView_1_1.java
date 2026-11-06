@@ -5,8 +5,6 @@
 package view;
 import com.mycompany.caps_creedy.dao.PegawaiDAO;
 import com.mycompany.caps_creedy.proses.UserSession;
-import java.util.List;
-import java.util.Objects;
 
 
 /**
@@ -15,24 +13,38 @@ import java.util.Objects;
  */
 public class LiatProfilView_1_1 extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AdminView2.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LiatProfilView_1_1.class.getName());
+    private java.util.function.Supplier<? extends javax.swing.JFrame> kembali;
 
     /**
      * Creates new form AdminView2
      */
-    public LiatProfilView_1_1() {
+public LiatProfilView_1_1() {
         initComponents();
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        if(!config.pegawai(this))return;
-        javax.swing.JTextField[] fields={jTextField2,jTextField3,jTextField4,jTextField5,jTextField6};
-        for(var field:fields){field.setText("");field.setEditable(false);}
-        config.kunciInformasi(getContentPane());
+
+        this.setExtendedState(javax.swing.JFrame.NORMAL);
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        // Kunci TextField agar Read-Only
+        javax.swing.JTextField[] fields = {jTextField2, jTextField3, jTextField4, jTextField5, jTextField6};
+        for (javax.swing.JTextField f : fields) {
+            f.setEditable(false);
+            f.setFocusable(false);
+        }
+
+        // Fetch Data Pegawai
         String userId=UserSession.getUserId();
         config.run(this, () -> new PegawaiDAO().profilPegawai(userId), data -> {
             jTextField2.setText(data.userId());jTextField3.setText(data.nip());jTextField4.setText(data.jabatan());
             jTextField5.setText(data.cabang());jTextField6.setText(data.nama());
             jTextField4.setToolTipText("Batas persetujuan: "+data.batas());
         });
+    }
+
+public LiatProfilView_1_1(java.util.function.Supplier<? extends javax.swing.JFrame> kembali) {
+        this();
+        this.kembali = java.util.Objects.requireNonNull(kembali);
     }
 
     /**
@@ -58,7 +70,7 @@ public class LiatProfilView_1_1 extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         BG = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel6.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
@@ -77,6 +89,7 @@ public class LiatProfilView_1_1 extends javax.swing.JFrame {
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, -1, -1));
 
         jTextField2.setText(" ");
+        jTextField2.addActionListener(this::jTextField2ActionPerformed);
         getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 230, -1));
 
         jLabel5.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
@@ -118,18 +131,21 @@ public class LiatProfilView_1_1 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        if(kembali!=null)config.open(this,kembali);else dispose();
+    if (kembali != null) {
+            config.open(this, kembali);
+        } else {
+            this.dispose();
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -140,16 +156,17 @@ public class LiatProfilView_1_1 extends javax.swing.JFrame {
         } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
+
+        java.awt.EventQueue.invokeLater(() -> new LiatProfilView_1_1().setVisible(true));
+    }
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new LoginView().setVisible(true));
-    }
-
-    private java.util.function.Supplier<? extends javax.swing.JFrame> kembali;
-    public LiatProfilView_1_1(java.util.function.Supplier<? extends javax.swing.JFrame> kembali) {
-        this();this.kembali=java.util.Objects.requireNonNull(kembali);
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BG;

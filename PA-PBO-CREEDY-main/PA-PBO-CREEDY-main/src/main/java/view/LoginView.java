@@ -24,7 +24,11 @@ public class LoginView extends javax.swing.JFrame {
 
 public LoginView() {
     initComponents();
+    this.setExtendedState(javax.swing.JFrame.NORMAL);
 
+    // 3. Posisikan window tepat di tengah layar secara otomatis
+    this.setLocationRelativeTo(null);
+    
     Color pink = new Color(255, 77, 112);
     Color abu = new Color(240, 242, 249);
     Color teksAbu = new Color(120, 125, 145);
@@ -198,6 +202,7 @@ public LoginView() {
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/bg lgoin.png"))); // NOI18N
         bg.setText("df");
+        bg.setPreferredSize(new java.awt.Dimension(1294, 647));
         getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();

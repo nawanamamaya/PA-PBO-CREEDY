@@ -22,6 +22,9 @@ public class LiatProfilView_1 extends javax.swing.JFrame {
      */
     public LiatProfilView_1() {
         initComponents();
+        
+    this.setExtendedState(javax.swing.JFrame.NORMAL);
+    this.setLocationRelativeTo(null);
         if(!config.nasabah(this))return;
         javax.swing.JTextField[] fields={jTextField2,jTextField3,jTextField4,jTextField5,jTextField6,jTextField7,jTextField8};
         for(var f:fields)f.setEditable(false);

@@ -26,6 +26,8 @@ public AdminView2_2_1() {
     initComponents();
     tampilDataJenisRekening();
     
+    this.setExtendedState(javax.swing.JFrame.NORMAL);
+    this.setLocationRelativeTo(null);
     jTable1.getTableHeader().setReorderingAllowed(false);
     jTable1.getTableHeader().setResizingAllowed(false);
     
@@ -44,13 +46,6 @@ public AdminView2_2_1() {
                 jTextField2.setText("REK-" + (row + 1));
             }
         }
-    });
-
-    // Z-Order tombol profil agar selalu paling depan & aktif
-    getContentPane().setComponentZOrder(jButton5, 0);
-    jButton5.addActionListener(e -> {
-        LiatProfilView_1_1 profilView = new LiatProfilView_1_1();
-        profilView.setVisible(true);
     });
 }
 private void tampilDataJenisRekening() {
