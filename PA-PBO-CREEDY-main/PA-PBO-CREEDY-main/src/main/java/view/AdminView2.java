@@ -31,17 +31,25 @@ public AdminView2() {
     jTable1.getTableHeader().setReorderingAllowed(false);
     jTable1.getTableHeader().setResizingAllowed(false);
     
-    // 1. Listener klik tabel untuk mengisi form input cabang otomatis (Tetap Dipertahankan)
+    // Listener klik tabel cabang
     jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
         @Override
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             int row = jTable1.getSelectedRow();
             if (row != -1) {
-                jTextField2.setText(jTable1.getValueAt(row, 0).toString()); // ID Cabang
-                jTextField5.setText(jTable1.getValueAt(row, 1).toString()); // Nama Cabang
-                jTextField3.setText(jTable1.getValueAt(row, 2).toString());   // Alamat
+                // [DIUBAH] jTextField2 diisi kolom ke-3 (Nomor Telepon), bukan lagi kolom ke-0 (ID Cabang)
+                jTextField2.setText(jTable1.getValueAt(row, 3).toString()); // Nomor Telepon
+                jTextField5.setText(jTable1.getValueAt(row, 1).toString()); // Wilayah/Nama Cabang
+                jTextField3.setText(jTable1.getValueAt(row, 2).toString()); // Alamat
             }
         }
+    });
+
+    // Pastikan tombol profil tetap di paling depan
+    getContentPane().setComponentZOrder(jButton5, 0);
+    jButton5.addActionListener(e -> {
+        LiatProfilView_1_1 profilView = new LiatProfilView_1_1();
+        profilView.setVisible(true);
     });
 }
 
@@ -324,6 +332,37 @@ private String generateNextCabangId(Connection conn) {
         System.out.println("Error Auto ID Cabang: " + e.getMessage());
     }
     return nextId;
+}
+
+private void jButtonSimpanPerubahanCabangActionPerformed(java.awt.event.ActionEvent evt) {
+    int row = jTable1.getSelectedRow();
+    if (row == -1) {
+        JOptionPane.showMessageDialog(this, "Pilih baris cabang yang ingin diubah dari tabel terlebih dahulu!");
+        return;
+    }
+
+    // Ambil ID Cabang tersembunyi/langsung dari baris yang diklik di tabel (Kolom 0)
+    String selectedCabangId = jTable1.getValueAt(row, 0).toString(); 
+    
+    String noTelepon = jTextField2.getText().trim();
+    String namaCabang = jTextField5.getText().trim();
+    String alamat = jTextField3.getText().trim();
+
+    try {
+        Connection conn = config.configDB();
+        String sql = "UPDATE cabang SET nama_cabang = ?, alamat = ?, no_telepon = ? WHERE cabang_id = ?";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, namaCabang);
+        pst.setString(2, alamat);
+        pst.setString(3, noTelepon);
+        pst.setString(4, selectedCabangId);
+
+        pst.executeUpdate();
+        JOptionPane.showMessageDialog(this, "Data cabang " + selectedCabangId + " berhasil diperbarui!");
+        tampilDataCabang(); // Refresh tabel
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Gagal mengubah data cabang: " + e.getMessage());
+    }
 }
     
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed

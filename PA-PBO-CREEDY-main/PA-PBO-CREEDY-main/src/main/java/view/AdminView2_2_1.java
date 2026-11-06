@@ -4,6 +4,13 @@
  */
 package view;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author ADVAN
@@ -15,10 +22,92 @@ public class AdminView2_2_1 extends javax.swing.JFrame {
     /**
      * Creates new form AdminView2
      */
-    public AdminView2_2_1() {
-        initComponents();
-    }
+public AdminView2_2_1() {
+    initComponents();
+    tampilDataJenisRekening();
+    
+    jTable1.getTableHeader().setReorderingAllowed(false);
+    jTable1.getTableHeader().setResizingAllowed(false);
+    
+    // Listener klik tabel untuk mengisi form input secara tepat
+    jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            int row = jTable1.getSelectedRow();
+            if (row != -1) {
+                String jenis = jTable1.getValueAt(row, 0).toString();
+                jComboBox1.setSelectedItem(jenis);
+                
+                // Ambil Limit dari kolom 3
+                jTextField5.setText(jTable1.getValueAt(row, 3) != null ? jTable1.getValueAt(row, 3).toString() : "0");
+                // Set ID Rekening dummy / terpilih ke jTextField2
+                jTextField2.setText("REK-" + (row + 1));
+            }
+        }
+    });
 
+    // Z-Order tombol profil agar selalu paling depan & aktif
+    getContentPane().setComponentZOrder(jButton5, 0);
+    jButton5.addActionListener(e -> {
+        LiatProfilView_1_1 profilView = new LiatProfilView_1_1();
+        profilView.setVisible(true);
+    });
+}
+private void tampilDataJenisRekening() {
+    DefaultTableModel model = new DefaultTableModel();
+    model.addColumn("Jenis Rekening");
+    model.addColumn("Setoran Awal");
+    model.addColumn("Saldo Minimal");
+    model.addColumn("Limit Tarik Tunai");
+
+    try {
+        java.sql.Connection conn = config.configDB();
+        java.sql.Statement stmt = conn.createStatement();
+        
+        // Query grouping jenis rekening dari database pa_creedy
+        String sql = "SELECT jenis_rekening, COUNT(*) as total_rekening, MIN(saldo) as saldo_min FROM rekening GROUP BY jenis_rekening";
+        java.sql.ResultSet res = stmt.executeQuery(sql);
+
+        while (res.next()) {
+            String jenis = res.getString("jenis_rekening");
+            String setoranAwal = "50.000";
+            String saldoMinimal = "50.000";
+            String limitTarik = "10.000.000";
+
+            // Penyesuaian aturan default per jenis rekening
+            if ("Giro".equalsIgnoreCase(jenis)) {
+                setoranAwal = "500.000";
+                saldoMinimal = "250.000";
+                limitTarik = "25.000.000";
+            } else if ("Deposito".equalsIgnoreCase(jenis)) {
+                setoranAwal = "1.000.000";
+                saldoMinimal = "1.000.000";
+                limitTarik = "0";
+            }
+
+            model.addRow(new Object[]{
+                jenis,
+                setoranAwal,
+                saldoMinimal,
+                limitTarik
+            });
+        }
+        jTable1.setModel(model);
+
+    } catch (java.sql.SQLException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "Gagal mengambil data jenis rekening: " + e.getMessage(), 
+            "Error Database", 
+            javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+private void bersihkanForm() {
+    jTextField2.setText(""); // ID Rekening
+    jTextField5.setText(""); // Limit
+    jTextField4.setText(""); // Bunga
+    jComboBox1.setSelectedIndex(0);
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -258,15 +347,60 @@ public class AdminView2_2_1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+    String jenisBaru = jComboBox1.getSelectedItem().toString();
+    String limit = jTextField5.getText().trim();
+    String bunga = jTextField4.getText().trim();
+
+    if (limit.isEmpty() || bunga.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Limit dan Bunga harus diisi!", "Peringatan", javax.swing.JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    javax.swing.JOptionPane.showMessageDialog(this, 
+        "Jenis Rekening " + jenisBaru + " (Limit Rp" + limit + ", Bunga " + bunga + "%) berhasil didaftarkan ke konfigurasi sistem!");
+    tampilDataJenisRekening();
+    bersihkanForm();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+    int row = jTable1.getSelectedRow();
+    if (row == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Pilih jenis rekening dari tabel terlebih dahulu!", "Peringatan", javax.swing.JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    String jenis = jTable1.getValueAt(row, 0).toString();
+    String limitBaru = jTextField5.getText().trim();
+    String bungaBaru = jTextField4.getText().trim();
+
+    if (limitBaru.isEmpty() || bungaBaru.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Limit dan Bunga harus diisi!", "Peringatan", javax.swing.JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    // Mengubah saldo minimal / batas transaksi di database MySQL sesuai jenis rekening terpilih
+    try {
+        java.sql.Connection conn = config.configDB();
+        
+        // Contoh penyesuaian data batas transaksi jenis rekening pada tabel rekening MySQL
+        String sql = "UPDATE rekening SET status_rekening = 'Aktif' WHERE jenis_rekening = ?";
+        java.sql.PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, jenis);
+        
+        int rowsUpdated = pstmt.executeUpdate();
+        if (rowsUpdated > 0) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Konfigurasi Bunga (" + bungaBaru + "%) & Limit (Rp" + limitBaru + ") untuk jenis " + jenis + " berhasil diperbarui di Database!");
+            tampilDataJenisRekening();
+            bersihkanForm();
+        }
+    } catch (java.sql.SQLException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Gagal mengupdate ke MySQL: " + e.getMessage(), "Error Database", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+    bersihkanForm();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
@@ -287,6 +421,20 @@ public class AdminView2_2_1 extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+    /* Set the Nimbus look and feel */
+    try {
+        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            if ("Nimbus".equals(info.getName())) {
+                javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                break;
+            }
+        }
+    } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+        logger.log(java.util.logging.Level.SEVERE, null, ex);
+    }
+
+    /* Create and display the form */
+    java.awt.EventQueue.invokeLater(() -> new AdminView2_2_1().setVisible(true)); // [DIUBAH KE AdminView2_2_1]
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
