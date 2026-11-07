@@ -322,7 +322,7 @@ Sistem memiliki **4 aktor** dengan hak akses sebagai berikut.
 
 ### 6.1 Struktur Folder Proyek
 
-> ✏️ <img width="404" height="519" alt="{BED5FD87-FF3F-4053-8BC0-2C43301DE686}" src="https://github.com/user-attachments/assets/78e8ee57-0c82-411c-a1da-de238eb27fc3" />
+> ✏️ 
 
 
 
@@ -332,7 +332,6 @@ Sistem memiliki **4 aktor** dengan hak akses sebagai berikut.
 
 #### 📦 Package `model`
 > ✏️ Berfungsi untuk mendefinisikan blueprint (cetak biru) dari entitas data yang ada di database menjadi objek Java (representasi tabel ke objek). Daftar class di dalamnya meliputi AkunData.java, Nasabah.java, Pegawai.java, User.java, dan UserSession.java.
-<img width="381" height="138" alt="{F692F335-B54F-430E-9045-00E4DA07AE59}" src="https://github.com/user-attachments/assets/73b7674a-2cf0-478a-9de5-73fa69ffbee6" />
 
 
 #### 📦 Package `view`
