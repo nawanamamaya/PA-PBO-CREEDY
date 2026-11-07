@@ -326,9 +326,7 @@ Sistem memiliki **4 aktor** dengan hak akses sebagai berikut.
 
 
 
-```text
 
-```
 
 ### 6.2 Penjelasan Package
 
