@@ -15,8 +15,6 @@ public abstract class User {
         this.nip = nip;
     }
 
-    public abstract void tampilkanInfo();
-
     public String getIdUser() { return idUser; }
     public String getEmail() { return email; }
     public String getPassword() { return password; }
