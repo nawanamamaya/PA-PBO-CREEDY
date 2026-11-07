@@ -23,7 +23,8 @@ public class NasabahView1_1_1_2 extends javax.swing.JFrame {
     public NasabahView1_1_1_2() {
         initComponents();
         if (!config.nasabah(this)) return;
-        jButton5.addActionListener(e -> config.open(this,LiatProfilView_1::new));
+                jButton5.addActionListener(e -> new LiatProfilView_1().setVisible(true));
+
         jTextArea2.setEditable(false);
         muatData();
         config.kunciInformasi(getContentPane());
@@ -63,6 +64,7 @@ public class NasabahView1_1_1_2 extends javax.swing.JFrame {
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -212,7 +214,7 @@ public class NasabahView1_1_1_2 extends javax.swing.JFrame {
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Blue White Illustration Website Launch Plan Presentation (23).png"))); // NOI18N
         bg.setText("b");
-        getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1030, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -306,7 +308,11 @@ public class NasabahView1_1_1_2 extends javax.swing.JFrame {
         tagihan=null;jButton3.setEnabled(false);jTextArea1.setText("");
         if(jComboBox1.getSelectedItem()==null)return;
         String id=config.selected(jComboBox1);
-        config.run(this, () -> new TransaksiDAO().tagihan(userId,id), data -> {
+        config.run(this, () -> {
+            try { return new TransaksiDAO().tagihan(userId,id); }
+            catch(IllegalArgumentException e) { return null; }
+        }, data -> {
+            if(data==null){jTextArea1.setText("Tidak ada angsuran belum lunas pada pinjaman ini.");return;}
             tagihan=data;jTextArea1.setText(data.rincian());jButton3.setEnabled(jComboBox2.getItemCount()>0);
         });
     }

@@ -94,7 +94,7 @@ public class PegawaiDAO {
         String cari=filter(pencarian);
         try(Connection c=Koneksi.getConnection()) {
             petugas(c,petugasId);
-            try(PreparedStatement p=c.prepareStatement("SELECT p.pinjaman_id,u.nama_lengkap,p.tenor_bulan,p.jumlah_pinjaman,p.status,p.skor_kelayakan,p.nomor_rekening_pencairan,p.catatan_keputusan FROM pinjaman p JOIN users u ON u.user_id=p.nasabah_user_id JOIN nasabah n ON n.user_id=p.nasabah_user_id WHERE p.status=? AND LOCATE(?,CONCAT(p.pinjaman_id,' ',n.nik,' ',u.nama_lengkap))>0 ORDER BY p.tanggal_pengajuan,p.pinjaman_id")) {
+            try(PreparedStatement p=c.prepareStatement("SELECT p.pinjaman_id,u.nama_lengkap,p.tenor_bulan,p.jumlah_pinjaman,p.status,p.skor_kelayakan,p.nasabah_user_id,p.catatan_keputusan FROM pinjaman p JOIN users u ON u.user_id=p.nasabah_user_id JOIN nasabah n ON n.user_id=p.nasabah_user_id WHERE p.status=? AND LOCATE(?,CONCAT(p.pinjaman_id,' ',n.nik,' ',u.nama_lengkap))>0 ORDER BY p.tanggal_pengajuan,p.pinjaman_id")) {
                 p.setString(1,status);p.setString(2,cari);try(ResultSet r=p.executeQuery()) {
                     List<Object[]> rows=new ArrayList<>();while(r.next())rows.add(new Object[]{r.getString(1),r.getString(2),r.getInt(3),r.getBigDecimal(4),r.getString(5),r.getBigDecimal(6),r.getString(7),r.getString(8)});return rows;
                 }

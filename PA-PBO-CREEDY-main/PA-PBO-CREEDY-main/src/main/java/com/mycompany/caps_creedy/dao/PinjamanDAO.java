@@ -9,9 +9,9 @@ public class PinjamanDAO {
     public List<Object[]> daftar(String userId) throws SQLException {
         try(Connection c=Koneksi.getConnection()) {
             NasabahDAO.aktif(c,userId);
-            try(PreparedStatement p=c.prepareStatement("SELECT pinjaman_id,tanggal_pengajuan,tenor_bulan,jumlah_pinjaman,status,catatan_keputusan,nomor_rekening_pencairan FROM pinjaman WHERE nasabah_user_id=? ORDER BY tanggal_pengajuan DESC,pinjaman_id")) {
+            try(PreparedStatement p=c.prepareStatement("SELECT pinjaman_id,tanggal_pengajuan,tenor_bulan,jumlah_pinjaman,status,catatan_keputusan,tanggal_cair FROM pinjaman WHERE nasabah_user_id=? ORDER BY tanggal_pengajuan DESC,pinjaman_id")) {
                 p.setString(1,userId);try(ResultSet r=p.executeQuery()) {
-                    List<Object[]> rows=new ArrayList<>();while(r.next()) rows.add(new Object[]{r.getString(1),r.getDate(2),r.getInt(3),r.getBigDecimal(4),r.getString(5),r.getString(6),r.getString(7)});return rows;
+                    List<Object[]> rows=new ArrayList<>();while(r.next()) rows.add(new Object[]{r.getString(1),r.getDate(2),r.getInt(3),r.getBigDecimal(4),r.getString(5),r.getString(6),r.getDate(7)});return rows;
                 }
             }
         }
@@ -50,8 +50,8 @@ public class PinjamanDAO {
                 // Rekening dikunci agar tidak dapat ditutup selama pengajuan disimpan.
                 TransaksiDAO.rekening(c,userId,rekening);
                 String id=TransaksiDAO.id("P");
-                try(PreparedStatement p=c.prepareStatement("INSERT INTO pinjaman (pinjaman_id,jumlah_pinjaman,tenor_bulan,suku_bunga,tujuan_pinjaman,skor_kelayakan,tanggal_pengajuan,nasabah_user_id,nomor_rekening_pencairan) VALUES (?,?,?,12.00,?,0,CURDATE(),?,?)")) {
-                    p.setString(1,id);p.setBigDecimal(2,jumlah);p.setInt(3,bulan);p.setString(4,tujuan.trim());p.setString(5,userId);p.setString(6,rekening);p.executeUpdate();
+                try(PreparedStatement p=c.prepareStatement("INSERT INTO pinjaman (pinjaman_id,jumlah_pinjaman,tenor_bulan,suku_bunga,tujuan_pinjaman,skor_kelayakan,tanggal_pengajuan,nasabah_user_id) VALUES (?,?,?,12.00,?,0,CURDATE(),?)")) {
+                    p.setString(1,id);p.setBigDecimal(2,jumlah);p.setInt(3,bulan);p.setString(4,tujuan.trim());p.setString(5,userId);p.executeUpdate();
                 }
                 c.commit();return id;
             }catch(SQLException|RuntimeException e){c.rollback();throw e;}
@@ -72,13 +72,13 @@ public class PinjamanDAO {
             default -> throw new IllegalStateException("Batas persetujuan petugas belum dikenali. Hubungi admin.");
         };
     }
-    private record Kredit(String nasabah,String rekening,BigDecimal jumlah,int bulan,BigDecimal bunga,BigDecimal skor,String status) {}
+    private record Kredit(String nasabah,BigDecimal jumlah,int bulan,BigDecimal bunga,BigDecimal skor,String status) {}
     private static Kredit kunci(Connection c,String id,String status,BigDecimal expectedScore) throws SQLException {
         if(id==null || !id.matches("[A-Za-z0-9-]{1,10}"))throw new IllegalArgumentException("Pilih pinjaman yang valid.");
-        try(PreparedStatement p=c.prepareStatement("SELECT nasabah_user_id,nomor_rekening_pencairan,jumlah_pinjaman,tenor_bulan,suku_bunga,skor_kelayakan,status FROM pinjaman WHERE pinjaman_id=? FOR UPDATE")) {
+        try(PreparedStatement p=c.prepareStatement("SELECT nasabah_user_id,jumlah_pinjaman,tenor_bulan,suku_bunga,skor_kelayakan,status FROM pinjaman WHERE pinjaman_id=? FOR UPDATE")) {
             p.setString(1,id);try(ResultSet r=p.executeQuery()) {
                 if(!r.next())throw new IllegalStateException("Pinjaman tidak ditemukan. Muat ulang daftar.");
-                Kredit k=new Kredit(r.getString(1),r.getString(2),r.getBigDecimal(3),r.getInt(4),r.getBigDecimal(5),r.getBigDecimal(6),r.getString(7));
+                Kredit k=new Kredit(r.getString(1),r.getBigDecimal(2),r.getInt(3),r.getBigDecimal(4),r.getBigDecimal(5),r.getString(6));
                 if(!status.equals(k.status()))throw new IllegalStateException("Status pinjaman sudah berubah. Muat ulang daftar sebelum melanjutkan.");
                 if(expectedScore!=null && k.skor().compareTo(expectedScore)!=0)throw new IllegalStateException("Skor telah diubah petugas lain. Muat ulang daftar.");
                 return k;
@@ -96,8 +96,8 @@ public class PinjamanDAO {
             try {
                 PegawaiDAO.petugas(c,petugas);NasabahDAO.aktif(c,nasabah);TransaksiDAO.rekening(c,nasabah,rekening);
                 String id=TransaksiDAO.id("P");
-                try(PreparedStatement p=c.prepareStatement("INSERT INTO pinjaman (pinjaman_id,jumlah_pinjaman,tenor_bulan,suku_bunga,tujuan_pinjaman,skor_kelayakan,tanggal_pengajuan,nasabah_user_id,pegawai_user_id,nomor_rekening_pencairan) VALUES (?,?,?,12.00,?,0,CURDATE(),?,?,?)")) {
-                    p.setString(1,id);p.setBigDecimal(2,jumlah);p.setInt(3,bulan);p.setString(4,tujuan.trim());p.setString(5,nasabah);p.setString(6,petugas);p.setString(7,rekening);p.executeUpdate();
+                try(PreparedStatement p=c.prepareStatement("INSERT INTO pinjaman (pinjaman_id,jumlah_pinjaman,tenor_bulan,suku_bunga,tujuan_pinjaman,skor_kelayakan,tanggal_pengajuan,nasabah_user_id,pegawai_user_id) VALUES (?,?,?,12.00,?,0,CURDATE(),?,?)")) {
+                    p.setString(1,id);p.setBigDecimal(2,jumlah);p.setInt(3,bulan);p.setString(4,tujuan.trim());p.setString(5,nasabah);p.setString(6,petugas);p.executeUpdate();
                 }
                 c.commit();return id;
             }catch(SQLException|RuntimeException e){c.rollback();throw e;}
@@ -130,7 +130,7 @@ public class PinjamanDAO {
                 Kredit k=kunci(c,id,"Diajukan",expectedScore);
                 if("Disetujui".equals(keputusan)) {
                     if(k.jumlah().signum()<=0 || k.jumlah().compareTo(batas(profil))>0)throw new IllegalArgumentException("Nominal melampaui batas persetujuan Anda: "+profil.batas()+".");
-                    NasabahDAO.aktif(c,k.nasabah());TransaksiDAO.rekening(c,k.nasabah(),k.rekening());
+                    NasabahDAO.aktif(c,k.nasabah());
                 }
                 try(PreparedStatement p=c.prepareStatement("UPDATE pinjaman SET status=?,skor_kelayakan=?,catatan_keputusan=?,tanggal_keputusan=CURDATE(),pegawai_user_id=? WHERE pinjaman_id=?")) {
                     p.setString(1,keputusan);p.setBigDecimal(2,score);p.setString(3,catatan.trim());p.setString(4,petugas);p.setString(5,id);p.executeUpdate();
@@ -146,11 +146,11 @@ public class PinjamanDAO {
             try {
                 PegawaiDAO.Profil profil=PegawaiDAO.petugas(c,petugas);
                 Kredit k=kunci(c,id,"Disetujui",null);
-                if(expectedJumlah==null || k.jumlah().compareTo(expectedJumlah)!=0 || !Objects.equals(k.rekening(),expectedRekening))throw new IllegalStateException("Data pencairan berubah. Muat ulang dan konfirmasi kembali.");
+                if(expectedJumlah==null || k.jumlah().compareTo(expectedJumlah)!=0)throw new IllegalStateException("Data pencairan berubah. Muat ulang dan konfirmasi kembali.");
                 if(k.jumlah().signum()<=0 || k.jumlah().compareTo(batas(profil))>0)throw new IllegalArgumentException("Nominal melampaui batas kewenangan Anda: "+profil.batas()+".");
                 if(k.bulan()<1 || k.bulan()>360 || k.bunga().signum()<0)throw new IllegalStateException("Tenor atau bunga pinjaman tidak valid. Hubungi admin.");
                 NasabahDAO.aktif(c,k.nasabah());
-                BigDecimal saldo=TransaksiDAO.rekening(c,k.nasabah(),k.rekening()).add(k.jumlah());
+                BigDecimal saldo=TransaksiDAO.rekening(c,k.nasabah(),expectedRekening).add(k.jumlah());
                 try(PreparedStatement p=c.prepareStatement("SELECT (SELECT COUNT(*) FROM jadwal_angsuran WHERE pinjaman_id=?)+(SELECT COUNT(*) FROM transaksi WHERE pinjaman_id=? AND jenis_transaksi='Pencairan Pinjaman')")) {
                     p.setString(1,id);p.setString(2,id);try(ResultSet r=p.executeQuery()){r.next();if(r.getLong(1)>0)throw new IllegalStateException("Pinjaman sudah memiliki jadwal atau pencairan. Hubungi admin untuk memeriksa data.");}
                 }
@@ -169,14 +169,14 @@ public class PinjamanDAO {
                     }
                     p.executeBatch();
                 }
-                TransaksiDAO.saldo(c,k.rekening(),saldo);
+                TransaksiDAO.saldo(c,expectedRekening,saldo);
                 try(PreparedStatement p=c.prepareStatement("INSERT INTO transaksi (transaksi_id,jenis_transaksi,jumlah,saldo_setelah,channel,waktu_transaksi,keterangan,nomor_rekening,pegawai_user_id,pinjaman_id) VALUES (?,'Pencairan Pinjaman',?,?,'Teller',NOW(),?,?,?,?)")) {
-                    p.setString(1,TransaksiDAO.id("T"));p.setBigDecimal(2,k.jumlah());p.setBigDecimal(3,saldo);p.setString(4,"Pencairan pinjaman "+id);p.setString(5,k.rekening());p.setString(6,petugas);p.setString(7,id);p.executeUpdate();
+                    p.setString(1,TransaksiDAO.id("T"));p.setBigDecimal(2,k.jumlah());p.setBigDecimal(3,saldo);p.setString(4,"Pencairan pinjaman "+id);p.setString(5,expectedRekening);p.setString(6,petugas);p.setString(7,id);p.executeUpdate();
                 }
                 try(PreparedStatement p=c.prepareStatement("UPDATE pinjaman SET status='Aktif',tanggal_cair=?,pegawai_user_id=? WHERE pinjaman_id=?")) {
                     p.setDate(1,java.sql.Date.valueOf(tanggal));p.setString(2,petugas);p.setString(3,id);p.executeUpdate();
                 }
-                c.commit();return new Pencairan(id,k.rekening(),k.jumlah(),k.bulan(),bungaTotal,saldo);
+                c.commit();return new Pencairan(id,expectedRekening,k.jumlah(),k.bulan(),bungaTotal,saldo);
             }catch(SQLException|RuntimeException e){c.rollback();throw e;}
         }
     }

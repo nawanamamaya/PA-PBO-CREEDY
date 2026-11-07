@@ -28,7 +28,6 @@ public class NasabahView1 extends javax.swing.JFrame {
     jTable1.getTableHeader().setReorderingAllowed(false);
     jTable1.getTableHeader().setResizingAllowed(false);
         if (!config.nasabah(this)) return;
-        jButton5.addActionListener(e -> config.open(this,LiatProfilView_1::new));
         jTextField2.setEditable(false);jTextField3.setEditable(false);jTextField7.setEditable(false);
         muatData();
         config.kunciInformasi(getContentPane());
@@ -66,6 +65,7 @@ public class NasabahView1 extends javax.swing.JFrame {
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -180,7 +180,7 @@ public class NasabahView1 extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(8, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -223,6 +223,7 @@ public class NasabahView1 extends javax.swing.JFrame {
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Baru/user.png"))); // NOI18N
         jButton5.setBorder(null);
+        jButton5.addActionListener(this::jButton5ActionPerformed);
         getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, 80, 80));
 
         jButton9.setFont(new java.awt.Font("MS Reference Sans Serif", 0, 12)); // NOI18N
@@ -246,8 +247,7 @@ public class NasabahView1 extends javax.swing.JFrame {
         getContentPane().add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 190, 40));
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Blue White Illustration Website Launch Plan Presentation (23).png"))); // NOI18N
-        bg.setText("b");
-        getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1030, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -302,6 +302,10 @@ public class NasabahView1 extends javax.swing.JFrame {
     private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField7ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    new LiatProfilView_1().setVisible(true);
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments

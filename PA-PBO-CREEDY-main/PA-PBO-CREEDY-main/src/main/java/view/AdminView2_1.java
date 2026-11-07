@@ -84,6 +84,7 @@ public class AdminView2_1 extends javax.swing.JFrame {
         BG = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTable1.setAutoCreateRowSorter(true);
@@ -262,7 +263,7 @@ public class AdminView2_1 extends javax.swing.JFrame {
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, -1, -1));
 
         BG.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Blue White Illustration Website Launch Plan Presentation (23).png"))); // NOI18N
-        getContentPane().add(BG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, -1, -1));
+        getContentPane().add(BG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -4, 1030, 520));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

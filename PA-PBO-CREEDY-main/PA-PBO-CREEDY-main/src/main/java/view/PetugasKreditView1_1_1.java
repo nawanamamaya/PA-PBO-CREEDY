@@ -63,6 +63,7 @@ public class PetugasKreditView1_1_1 extends javax.swing.JFrame {
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -222,7 +223,7 @@ public class PetugasKreditView1_1_1 extends javax.swing.JFrame {
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Blue White Illustration Website Launch Plan Presentation (23).png"))); // NOI18N
         bg.setText("b");
-        getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1030, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

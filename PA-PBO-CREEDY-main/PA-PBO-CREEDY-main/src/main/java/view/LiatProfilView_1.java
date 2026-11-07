@@ -15,26 +15,54 @@ import java.math.BigDecimal;
  */
 public class LiatProfilView_1 extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AdminView2.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LiatProfilView_1_1.class.getName());
+    private java.util.function.Supplier<? extends javax.swing.JFrame> kembali;
 
     /**
      * Creates new form AdminView2
      */
     public LiatProfilView_1() {
         initComponents();
+
+        this.setExtendedState(javax.swing.JFrame.NORMAL);
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        // Kunci TextField agar Read-Only
+        javax.swing.JTextField[] fields = {jTextField2, jTextField3, jTextField4, jTextField5, jTextField6};
+        for (javax.swing.JTextField f : fields) {
+            f.setEditable(false);
+            f.setFocusable(false);
+        }
         
-    this.setExtendedState(javax.swing.JFrame.NORMAL);
-    this.setLocationRelativeTo(null);
-        if(!config.nasabah(this))return;
-        javax.swing.JTextField[] fields={jTextField2,jTextField3,jTextField4,jTextField5,jTextField6,jTextField7,jTextField8};
-        for(var f:fields)f.setEditable(false);
+    if (!config.nasabah(this)) return;
+
+        // Kunci TextField dan TextArea agar Read-Only
+        for (javax.swing.JTextField f : fields) {
+            f.setEditable(false);
+            f.setFocusable(false);
+        }
         jTextArea1.setEditable(false);
+        jTextArea1.setFocusable(false);
         config.kunciInformasi(getContentPane());
-        String userId=UserSession.getUserId();
+
+        // Fetch Data Nasabah (Gabungan Tabel users dan nasabah)
+        String userId = UserSession.getUserId();
         config.run(this, () -> new NasabahDAO().profil(userId), data -> {
-            jTextField2.setText(data[1]);jTextField3.setText(data[2]);jTextField4.setText(data[3]);jTextField5.setText(data[0]);
-            jTextField6.setText(data[4]);jTextArea1.setText(data[5]);jTextField7.setText(data[6]);jTextField8.setText(data[7]);
+            jTextField2.setText(data[1]); // user_id
+            jTextField3.setText(data[2]); // nik
+            jTextField4.setText(data[3]); // npwp
+            jTextField6.setText(data[4]); // nama_lengkap
+            jTextField5.setText(data[0]); // no_telepon
+            jTextArea1.setText(data[5]);  // alamat
+            jTextField7.setText(data[6]); // tipe_nasabah
+            jTextField8.setText(data[7]); // tanggal_daftar
         });
+    }
+
+    public LiatProfilView_1(java.util.function.Supplier<? extends javax.swing.JFrame> kembali) {
+        this();
+        this.kembali = java.util.Objects.requireNonNull(kembali);
     }
 
     /**
@@ -69,6 +97,7 @@ public class LiatProfilView_1 extends javax.swing.JFrame {
         BG = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel6.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
@@ -166,13 +195,18 @@ public class LiatProfilView_1 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        config.open(this,NasabahView1::new);
+    if (kembali != null) {
+            config.open(this, kembali);
+        } else {
+            this.dispose();
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(() -> new LiatProfilView_1().setVisible(true));
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

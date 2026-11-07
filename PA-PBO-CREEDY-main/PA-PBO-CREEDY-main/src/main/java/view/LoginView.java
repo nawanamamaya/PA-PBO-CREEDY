@@ -23,62 +23,56 @@ public class LoginView extends javax.swing.JFrame {
      */
 
 public LoginView() {
-    initComponents();
-    this.setExtendedState(javax.swing.JFrame.NORMAL);
+        initComponents();
+        this.setExtendedState(javax.swing.JFrame.NORMAL);
+        this.setLocationRelativeTo(null);
+        
+        Color pink = new Color(255, 77, 112);
+        Color abu = new Color(240, 242, 249);
+        Color teksAbu = new Color(120, 125, 145);
 
-    // 3. Posisikan window tepat di tengah layar secara otomatis
-    this.setLocationRelativeTo(null);
-    
-    Color pink = new Color(255, 77, 112);
-    Color abu = new Color(240, 242, 249);
-    Color teksAbu = new Color(120, 125, 145);
+        JToggleButton[] tombol = {
+            jToggleButton1,
+            jToggleButton2,
+            jToggleButton4,
+            jToggleButton3
+        };
 
-    JToggleButton[] tombol = {
-        jToggleButton1,
-        jToggleButton2,
-        jToggleButton4,
-        jToggleButton3
-    };
+        for (JToggleButton btn : tombol) {
+            // Baris btn.setUI(...) DIHAPUS agar mendukung FlatLaf
+            btn.setFocusPainted(false);
+            btn.setBorderPainted(false);
+            btn.setContentAreaFilled(true);
+            btn.setOpaque(true);
 
-    for (JToggleButton btn : tombol) {
-
-        // Gunakan tampilan dasar Swing
-        btn.setUI(new javax.swing.plaf.basic.BasicToggleButtonUI());
-
-        btn.setFocusPainted(false);
-        btn.setBorderPainted(false);
-        btn.setContentAreaFilled(true);
-        btn.setOpaque(true);
-
-        btn.addActionListener(e -> {
-
-            for (JToggleButton b : tombol) {
-
-                if (b.isSelected()) {
-                    b.setBackground(pink);
-                    b.setForeground(Color.WHITE);
-                } else {
-                    b.setBackground(abu);
-                    b.setForeground(teksAbu);
+            btn.addActionListener(e -> {
+                for (JToggleButton b : tombol) {
+                    if (b.isSelected()) {
+                        b.setBackground(pink);
+                        b.setForeground(Color.WHITE);
+                    } else {
+                        b.setBackground(abu);
+                        b.setForeground(teksAbu);
+                    }
                 }
+            });
+        }
+
+        // Pilihan awal
+        jToggleButton1.setSelected(true);
+
+        // Atur warna awal
+        for (JToggleButton btn : tombol) {
+            if (btn.isSelected()) {
+                btn.setBackground(pink);
+                btn.setForeground(Color.WHITE);
+            } else {
+                btn.setBackground(abu);
+                btn.setForeground(teksAbu);
             }
-        });
-    }
-
-    // Pilihan awal
-    jToggleButton1.setSelected(true);
-
-    // Atur warna awal
-    for (JToggleButton btn : tombol) {
-        if (btn.isSelected()) {
-            btn.setBackground(pink);
-            btn.setForeground(Color.WHITE);
-        } else {
-            btn.setBackground(abu);
-            btn.setForeground(teksAbu);
         }
     }
-}
+
 
 
     /**
@@ -89,6 +83,7 @@ public LoginView() {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel2 = new javax.swing.JLabel();
@@ -109,38 +104,87 @@ public LoginView() {
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setResizable(false);
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jLabel2.setFont(new java.awt.Font("Calibri", 1, 48)); // NOI18N
         jLabel2.setText("Selamat Datang");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 40, -1, 60));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 7;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(40, 530, 0, 0);
+        getContentPane().add(jLabel2, gridBagConstraints);
 
         jLabel11.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(153, 153, 153));
         jLabel11.setText("Masuk untuk melanjutkan ke sistem Creedy");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 90, -1, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(90, 530, 0, 0);
+        getContentPane().add(jLabel11, gridBagConstraints);
 
         jLabel5.setFont(new java.awt.Font("Calibri", 1, 17)); // NOI18N
         jLabel5.setText("Password");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 370, -1, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(28, 530, 0, 0);
+        getContentPane().add(jLabel5, gridBagConstraints);
 
         jLabel6.setFont(new java.awt.Font("Calibri", 1, 17)); // NOI18N
         jLabel6.setText("Masuk sebagai");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 160, -1, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(50, 530, 0, 0);
+        getContentPane().add(jLabel6, gridBagConstraints);
 
         jTextField1.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(102, 102, 102));
         jTextField1.addActionListener(this::jTextField1ActionPerformed);
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 390, 530, 40));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 13;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 462;
+        gridBagConstraints.ipady = 10;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(48, 530, 0, 0);
+        getContentPane().add(jTextField1, gridBagConstraints);
 
         jTextField2.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
         jTextField2.setForeground(new java.awt.Color(102, 102, 102));
         jTextField2.addActionListener(this::jTextField2ActionPerformed);
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 302, 530, 40));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 13;
+        gridBagConstraints.ipadx = 462;
+        gridBagConstraints.ipady = 10;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(1, 530, 0, 0);
+        getContentPane().add(jTextField2, gridBagConstraints);
 
         jLabel7.setFont(new java.awt.Font("Calibri", 1, 17)); // NOI18N
         jLabel7.setText("Email");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 280, -1, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(50, 530, 0, 0);
+        getContentPane().add(jLabel7, gridBagConstraints);
 
         buttonGroup1.add(jToggleButton1);
         jToggleButton1.setText("Nasabah");
@@ -174,36 +218,70 @@ public LoginView() {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
             .addComponent(jToggleButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jToggleButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jToggleButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 190, 530, 40));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 13;
+        gridBagConstraints.ipadx = -18;
+        gridBagConstraints.ipady = 13;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 530, 0, 0);
+        getContentPane().add(jPanel1, gridBagConstraints);
 
         jButton1.setBackground(new java.awt.Color(153, 0, 153));
         jButton1.setFont(new java.awt.Font("Calibri", 1, 16)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Masuk");
+        jButton1.setPreferredSize(new java.awt.Dimension(100, 50));
         jButton1.addActionListener(this::jButton1ActionPerformed);
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 500, 410, 40));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 14;
+        gridBagConstraints.ipadx = 331;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(70, 68, 0, 0);
+        getContentPane().add(jButton1, gridBagConstraints);
 
         jLabel3.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
         jLabel3.setText("Belum punya akun nasabah?");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 550, -1, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 8;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 128, 0, 0);
+        getContentPane().add(jLabel3, gridBagConstraints);
 
         jButton2.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
         jButton2.setForeground(new java.awt.Color(153, 0, 153));
         jButton2.setText("Daftar di sini");
         jButton2.setBorder(null);
         jButton2.addActionListener(this::jButton2ActionPerformed);
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 550, -1, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 11;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 7, 0, 0);
+        getContentPane().add(jButton2, gridBagConstraints);
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/bg lgoin.png"))); // NOI18N
         bg.setText("df");
         bg.setPreferredSize(new java.awt.Dimension(1294, 647));
-        getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 18;
+        gridBagConstraints.gridheight = 11;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        getContentPane().add(bg, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

@@ -60,6 +60,7 @@ public class PetugasKreditView1_1_2 extends javax.swing.JFrame {
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -202,7 +203,7 @@ public class PetugasKreditView1_1_2 extends javax.swing.JFrame {
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Blue White Illustration Website Launch Plan Presentation (23).png"))); // NOI18N
         bg.setText("b");
-        getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1030, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -289,16 +290,21 @@ public class PetugasKreditView1_1_2 extends javax.swing.JFrame {
     }
     private void muatPengajuan() {
         String cari=pencarian;
-        config.run(this, () -> new PegawaiDAO().pengajuan(userId,"Disetujui",cari), rows -> {jTable1.setModel(config.table(new String[]{"ID Pinjaman","Nasabah","Tenor (bulan)","Jumlah","Status","Skor","Rekening Pencairan","Catatan"},rows));jButton3.setEnabled(false);});
+        config.run(this, () -> new PegawaiDAO().pengajuan(userId,"Disetujui",cari), rows -> {jTable1.setModel(config.table(new String[]{"ID Pinjaman","Nasabah","Tenor (bulan)","Jumlah","Status","Skor","ID Nasabah","Catatan"},rows));jButton3.setEnabled(false);});
     }
     private void cairkan() {
         int view=jTable1.getSelectedRow();if(view<0)throw new IllegalArgumentException("Pilih pinjaman yang telah disetujui.");
         int row=jTable1.convertRowIndexToModel(view);
-        String id=jTable1.getModel().getValueAt(row,0).toString(),rekening=(String)jTable1.getModel().getValueAt(row,6);
+        String id=jTable1.getModel().getValueAt(row,0).toString(),nasabah=(String)jTable1.getModel().getValueAt(row,6);
         java.math.BigDecimal jumlah=(java.math.BigDecimal)jTable1.getModel().getValueAt(row,3);
-        if(rekening==null || rekening.isBlank())throw new IllegalArgumentException("Rekening pencairan pinjaman belum tercatat. Hubungi admin; rekening tidak akan dipilih secara otomatis.");
-        if(javax.swing.JOptionPane.showConfirmDialog(this,"Cairkan "+id+" sebesar Rp "+jumlah+"\nKe rekening: "+rekening+"\nJadwal angsuran dimulai satu bulan setelah pencairan.","Konfirmasi pencairan",javax.swing.JOptionPane.YES_NO_OPTION)!=javax.swing.JOptionPane.YES_OPTION)return;
-        config.run(this, () -> new com.mycompany.caps_creedy.dao.PinjamanDAO().cairkan(userId,id,jumlah,rekening), hasil -> {config.info(this,"Pinjaman "+hasil.pinjaman()+" berhasil dicairkan.\nTerbentuk "+hasil.bulan()+" jadwal angsuran.\nTotal bunga: Rp "+hasil.bungaTotal());muatPengajuan();});
+        config.run(this, () -> new PegawaiDAO().rekeningNasabah(userId,nasabah), daftar -> {
+            if(daftar.isEmpty()){config.error(this,new IllegalStateException("Nasabah belum memiliki rekening aktif."));return;}
+            Object pilih=javax.swing.JOptionPane.showInputDialog(this,"Pilih rekening tujuan pencairan "+id+" (Rp "+jumlah+")","Rekening pencairan",javax.swing.JOptionPane.QUESTION_MESSAGE,null,daftar.toArray(),daftar.get(0));
+            if(pilih==null)return;
+            String rekening=pilih.toString();
+            if(javax.swing.JOptionPane.showConfirmDialog(this,"Cairkan "+id+" sebesar Rp "+jumlah+"\nKe rekening: "+rekening+"\nJadwal angsuran dimulai satu bulan setelah pencairan.","Konfirmasi pencairan",javax.swing.JOptionPane.YES_NO_OPTION)!=javax.swing.JOptionPane.YES_OPTION)return;
+            config.run(this, () -> new com.mycompany.caps_creedy.dao.PinjamanDAO().cairkan(userId,id,jumlah,rekening), hasil -> {config.info(this,"Pinjaman "+hasil.pinjaman()+" berhasil dicairkan.\nTerbentuk "+hasil.bulan()+" jadwal angsuran.\nTotal bunga: Rp "+hasil.bungaTotal());muatPengajuan();});
+        });
     }
     private void cari() {
         String hasil=javax.swing.JOptionPane.showInputDialog(this,"Cari ID pinjaman, NIK, atau nama. Kosongkan untuk menampilkan semua pinjaman disetujui.",pencarian);

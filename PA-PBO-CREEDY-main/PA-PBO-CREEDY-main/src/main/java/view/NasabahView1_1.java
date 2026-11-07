@@ -26,7 +26,6 @@ public class NasabahView1_1 extends javax.swing.JFrame {
     this.setExtendedState(javax.swing.JFrame.NORMAL);
     this.setLocationRelativeTo(null);
         if (!config.nasabah(this)) return;
-        jButton5.addActionListener(e -> config.open(this,LiatProfilView_1::new));
         jTextArea2.setEditable(false);
         tombolSatuanTenor=config.jangkaWaktu(jTextField7,jPanel2);
         muatData();
@@ -72,6 +71,7 @@ public class NasabahView1_1 extends javax.swing.JFrame {
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -157,12 +157,12 @@ public class NasabahView1_1 extends javax.swing.JFrame {
                                 .addComponent(jButton3)
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addComponent(jScrollPane2))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(8, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -215,6 +215,7 @@ public class NasabahView1_1 extends javax.swing.JFrame {
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Baru/user.png"))); // NOI18N
         jButton5.setBorder(null);
+        jButton5.addActionListener(this::jButton5ActionPerformed);
         getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, 80, 80));
 
         jButton9.setFont(new java.awt.Font("MS Reference Sans Serif", 0, 12)); // NOI18N
@@ -239,7 +240,7 @@ public class NasabahView1_1 extends javax.swing.JFrame {
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Blue White Illustration Website Launch Plan Presentation (23).png"))); // NOI18N
         bg.setText("b");
-        getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1030, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -306,6 +307,10 @@ public class NasabahView1_1 extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         kirim();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    new LiatProfilView_1().setVisible(true);
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments

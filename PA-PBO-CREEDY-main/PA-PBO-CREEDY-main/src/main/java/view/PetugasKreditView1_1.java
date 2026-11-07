@@ -68,6 +68,7 @@ public class PetugasKreditView1_1 extends javax.swing.JFrame {
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -268,7 +269,7 @@ public class PetugasKreditView1_1 extends javax.swing.JFrame {
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Blue White Illustration Website Launch Plan Presentation (23).png"))); // NOI18N
         bg.setText("b");
-        getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1030, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -370,7 +371,7 @@ public class PetugasKreditView1_1 extends javax.swing.JFrame {
     private void muatPengajuan() {
         String cari=pencarian;
         config.run(this, () -> new PegawaiDAO().pengajuan(userId,"Diajukan",cari), rows -> {
-            jTable1.setModel(config.table(new String[]{"ID Pinjaman","Nasabah","Tenor (bulan)","Jumlah","Status","Skor","Rekening Pencairan","Catatan"},rows));
+            jTable1.setModel(config.table(new String[]{"ID Pinjaman","Nasabah","Tenor (bulan)","Jumlah","Status","Skor","ID Nasabah","Catatan"},rows));
             aktifkanInput(false);jTextField1.setText("");jTextArea1.setText("");jTextArea1.setToolTipText(rows.isEmpty()?"Belum ada pengajuan yang sesuai.":"Pilih baris pengajuan, lalu isi alasan keputusan.");
         });
     }

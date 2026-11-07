@@ -23,7 +23,7 @@ public class NasabahView1_1_1_1 extends javax.swing.JFrame {
     public NasabahView1_1_1_1() {
         initComponents();
         if (!config.nasabah(this)) return;
-        jButton5.addActionListener(e -> config.open(this,LiatProfilView_1::new));
+        jButton5.addActionListener(e -> new LiatProfilView_1().setVisible(true));
         jTextArea2.setEditable(false);
         muatData();
         config.kunciInformasi(getContentPane());
@@ -58,6 +58,7 @@ public class NasabahView1_1_1_1 extends javax.swing.JFrame {
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -225,7 +226,7 @@ public class NasabahView1_1_1_1 extends javax.swing.JFrame {
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Blue White Illustration Website Launch Plan Presentation (23).png"))); // NOI18N
         bg.setText("b");
-        getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1030, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -298,7 +299,7 @@ public class NasabahView1_1_1_1 extends javax.swing.JFrame {
 
     private void muatData() {
         config.run(this, () -> new PinjamanDAO().daftar(userId), rows -> jTable1.setModel(config.table(
-            new String[]{"ID Pinjaman","Tanggal","Tenor (bulan)","Jumlah","Status","Catatan Keputusan","Rekening Pencairan"},rows)));
+            new String[]{"ID Pinjaman","Tanggal","Tenor (bulan)","Jumlah","Status","Catatan Keputusan","Tanggal Cair"},rows)));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
