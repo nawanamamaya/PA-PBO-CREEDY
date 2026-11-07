@@ -1,6 +1,6 @@
 package com.mycompany.caps_creedy.model;
 
-public class User {
+public abstract class User {
     private String idUser;
     private String email;
     private String password;
@@ -14,6 +14,8 @@ public class User {
         this.nik = nik;
         this.nip = nip;
     }
+
+    public abstract void tampilkanInfo();
 
     public String getIdUser() { return idUser; }
     public String getEmail() { return email; }
