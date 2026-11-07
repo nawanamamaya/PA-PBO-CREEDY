@@ -322,7 +322,8 @@ Sistem memiliki **4 aktor** dengan hak akses sebagai berikut.
 
 ### 6.1 Struktur Folder Proyek
 
-> ✏️ *Isi: tempel struktur folder proyek (pohon direktori) di dalam blok kode di bawah.*
+> ✏️ <img width="365" height="540" alt="{2A7E8B73-F06C-458B-A34E-E8E9CE1DCFF3}" src="https://github.com/user-attachments/assets/ef785205-e075-495b-a103-d1b22738b58c" />
+
 
 ```text
 
