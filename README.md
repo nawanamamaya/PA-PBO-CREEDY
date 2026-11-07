@@ -15,7 +15,11 @@
 
 **Creedy – Sistem Informasi Tabungan dan Pinjaman Mikro**
 
-Program ini dikembangkan sebagai Project Akhir mata kuliah Pemrograman Berorientasi Objek (PBO), Program Studi Sistem Informasi, Fakultas Teknik, Universitas Mulawarman.
+### Anggota Kelompok Creedy:
+1. Rija Aulia Mayatri 2509116011 (Kelas A)
+2. Risky Farel Wijaya 2509116066 (Kelas B)
+3. Syafir Ahzami 2509116074 (Kelas B)
+4. Muhammad Aulia Rahman 2509116096 (Kelas C)
 
 ---
 
