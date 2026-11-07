@@ -317,3 +317,251 @@ Sistem memiliki **4 aktor** dengan hak akses sebagai berikut.
 | 11 | Jadwal_Angsuran → Transaksi | 1 : 0..1 | Satu angsuran dibayar melalui paling banyak satu transaksi; kosong bila belum dibayar. |
 
 ---
+
+## 6. 🗂️ Struktur Folder / Package
+
+### 6.1 Struktur Folder Proyek
+
+> ✏️ *Isi: tempel struktur folder proyek (pohon direktori) di dalam blok kode di bawah.*
+
+```text
+
+```
+
+### 6.2 Penjelasan Package
+
+#### 📦 Package `model`
+> ✏️ *Isi: fungsi package dan daftar class di dalamnya.*
+
+#### 📦 Package `view`
+> ✏️ *Isi: fungsi package dan daftar class/form GUI di dalamnya.*
+
+#### 📦 Package `controller`
+> ✏️ *Isi: fungsi package dan daftar class di dalamnya.*
+
+#### 📦 Package `dao`
+> ✏️ *Isi: fungsi package dan daftar class di dalamnya.*
+
+#### 📦 Package `koneksi` / `util`
+> ✏️ *Isi: fungsi package dan daftar class di dalamnya.*
+
+#### 🖼️ Folder `resources` / `images`
+> ✏️ *Isi: aset yang disimpan di folder ini.*
+
+#### 📚 Libraries
+> ✏️ *Isi: daftar file .jar yang digunakan (FlatLaf, MySQL Connector/J, dll).*
+
+### 6.3 Penerapan Arsitektur MVC + DAO
+
+> ✏️ *Isi: penjelasan singkat pembagian peran Model, View, Controller, dan DAO pada program.*
+
+---
+
+## 7. 🧱 Penjelasan Penerapan 4 Pilar OOP
+
+### 7.1 Encapsulation (Enkapsulasi)
+
+**Konsep:**
+> ✏️ *Isi: penjelasan singkat konsep.*
+
+#### 📁 Contoh 1: `NamaClass.java`
+> ✏️ *Isi: potongan kode (blok ```java) dan penjelasan penerapannya.*
+
+#### 📁 Contoh 2: `NamaClass.java`
+> ✏️ *Isi: potongan kode dan penjelasan.*
+
+**Kesimpulan:**
+> ✏️ *Isi: ringkasan penerapan enkapsulasi pada program.*
+
+---
+
+### 7.2 Inheritance (Pewarisan)
+
+**Konsep:**
+> ✏️ *Isi: penjelasan singkat konsep.*
+
+#### 📁 Contoh 1: `NamaClass.java`
+> ✏️ *Isi: potongan kode dan penjelasan penerapannya.*
+
+#### 📁 Contoh 2: `NamaClass.java`
+> ✏️ *Isi: potongan kode dan penjelasan.*
+
+#### 🌳 Hierarki Pewarisan
+> ✏️ *Isi: diagram atau gambar hierarki class (boleh memakai Mermaid `classDiagram`).*
+
+**Kesimpulan:**
+> ✏️ *Isi: ringkasan penerapan inheritance pada program.*
+
+---
+
+### 7.3 Abstraction (Abstraksi)
+
+**Konsep:**
+> ✏️ *Isi: penjelasan singkat konsep.*
+
+#### 📁 Contoh 1: `NamaClass.java` / `NamaInterface.java`
+> ✏️ *Isi: potongan kode (abstract class / interface) dan penjelasan penerapannya.*
+
+#### 📁 Contoh 2: `NamaClass.java`
+> ✏️ *Isi: potongan kode dan penjelasan.*
+
+**Kesimpulan:**
+> ✏️ *Isi: ringkasan penerapan abstraksi pada program.*
+
+---
+
+### 7.4 Polymorphism (Polimorfisme)
+
+**Konsep:**
+> ✏️ *Isi: penjelasan singkat konsep.*
+
+#### 📁 Contoh 1: Method Overriding pada `NamaClass.java`
+> ✏️ *Isi: potongan kode dan penjelasan penerapannya.*
+
+#### 📁 Contoh 2: Method Overloading / Dynamic Dispatch pada `NamaClass.java`
+> ✏️ *Isi: potongan kode dan penjelasan.*
+
+**Kesimpulan:**
+> ✏️ *Isi: ringkasan penerapan polimorfisme pada program.*
+
+---
+
+### 7.5 Ringkasan Penerapan 4 Pilar OOP
+
+| Pilar OOP | Class / File yang Menerapkan | Keterangan |
+|---|---|---|
+| Encapsulation | | |
+| Inheritance | | |
+| Abstraction | | |
+| Polymorphism | | |
+
+---
+
+## 8. 🖥️ Cara Penggunaan Program
+
+### 8.1 Prasyarat
+
+> ✏️ *Isi: perangkat lunak yang harus terpasang (JDK 17, XAMPP, NetBeans, dll).*
+
+### 8.2 Instalasi dan Konfigurasi
+
+#### 📥 Langkah 1: Clone Repository
+> ✏️ *Isi: perintah `git clone` dan langkah membuka proyek di NetBeans.*
+
+#### 🗄️ Langkah 2: Import Database
+> ✏️ *Isi: langkah import `database/pa_creedy.sql` melalui phpMyAdmin.*
+
+#### ⚙️ Langkah 3: Konfigurasi Koneksi Database
+> ✏️ *Isi: file dan nilai yang perlu disesuaikan (host, port, user, password).*
+
+#### ▶️ Langkah 4: Menjalankan Program
+> ✏️ *Isi: class utama (main) dan cara menjalankannya.*
+
+### 8.3 Akun untuk Uji Coba
+
+| Role | Email / Username | Password |
+|---|---|---|
+| Admin | | |
+| Teller | | |
+| Petugas Kredit | | |
+| Nasabah | | |
+
+### 8.4 Panduan Penggunaan per Halaman
+
+<details>
+<summary><b>🔑 Halaman Login</b></summary>
+
+<br>
+
+> ✏️ *Isi: screenshot GUI dan penjelasan fungsi halaman.*
+
+**Fitur pada halaman ini:**
+1. Login
+2. Pesan kesalahan bila kredensial salah
+
+</details>
+
+<details>
+<summary><b>🛠️ Halaman Admin</b></summary>
+
+<br>
+
+> ✏️ *Isi: screenshot dashboard Admin dan penjelasan.*
+
+**Fitur pada halaman ini:**
+1. Kelola Akun Petugas
+2. Kelola Cabang
+3. Kelola Jenis Rekening
+4. Lihat Profil dan Ganti Password
+5. Logout
+
+</details>
+
+<details>
+<summary><b>🧾 Halaman Teller</b></summary>
+
+<br>
+
+> ✏️ *Isi: screenshot dashboard Teller dan penjelasan.*
+
+**Fitur pada halaman ini:**
+1. Kelola Data Nasabah (Tambah, Lihat, Ubah)
+2. Buka dan Tutup Rekening
+3. Setor Tunai
+4. Tarik Tunai
+5. Isi Saldo Nasabah
+6. Lihat Profil dan Ganti Password
+7. Logout
+
+</details>
+
+<details>
+<summary><b>📊 Halaman Petugas Kredit</b></summary>
+
+<br>
+
+> ✏️ *Isi: screenshot dashboard Petugas Kredit dan penjelasan.*
+
+**Fitur pada halaman ini:**
+1. Lihat Data Nasabah
+2. Input Pengajuan Pinjaman
+3. Tinjau Pengajuan dan Skor Kelayakan
+4. Setujui / Tolak Pengajuan
+5. Cairkan Pinjaman dan Jadwal Angsuran Otomatis
+6. Pantau Tunggakan dan Denda
+7. Lihat Profil dan Ganti Password
+8. Logout
+
+</details>
+
+<details>
+<summary><b>👥 Halaman Nasabah</b></summary>
+
+<br>
+
+> ✏️ *Isi: screenshot dashboard Nasabah dan penjelasan.*
+
+**Fitur pada halaman ini:**
+1. Lihat Rekening dan Saldo
+2. Ajukan Pinjaman
+3. Pantau Status dan Batalkan Pengajuan
+4. Lihat Jadwal Angsuran dan Denda
+5. Bayar Angsuran
+6. Transfer
+7. Lihat Profil dan Ganti Password
+8. Logout
+
+</details>
+
+---
+
+## 9. 👨‍💻 Kontributor
+
+| No | Nama | NIM |
+|---|---|---|
+| 1 | Rija Aulia Mayatri | 2509116011 |
+| 2 | Risky Farel Wijaya | 2509116066 |
+| 3 | Syafir Ahzami | 2509116074 |
+| 4 | Muhammad Aulia Rahman | 2509116096 |
+
+**Program Studi Sistem Informasi, Fakultas Teknik, Universitas Mulawarman — 2026**
